@@ -22,9 +22,9 @@ llk_linux_SOURCES = \
 	eggtrayicon.c\
 	tray.c
 
-llk_linux_LDFLAGS = -lX11
 
 llk_linux_LDADD =  \
 	$(PACKAGE_LIBS)\
+	-L/usr/X11/lib\
+	-lX11\
 	 -lc
-

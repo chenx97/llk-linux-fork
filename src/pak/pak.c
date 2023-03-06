@@ -23,6 +23,7 @@
  */
 
 #include <pak.h>
+#include <stdio.h>
 
 gchar m_szFolderPath[300];  /* Folder to compile in to PAK */
 gchar m_szPakName[300];     /* Output PAK file path and name */
@@ -257,10 +258,10 @@ gboolean CreatePak(gchar *Path, gchar *Output) {
       fclose(PAKStream);
       return FALSE;
     }
-
+    printf("Setting Pos\n");
     /* Set the position in the PAK file for this file to be written at */
     /* If not GNU system,this should be Pos = Current->dwOffset */
-#ifdef WIN32
+#if (defined WIN32) || (defined __APPLE__)
     Pos = Current->dwOffset;
 #else
     Pos.__pos = Current->dwOffset;
@@ -423,7 +424,8 @@ gboolean ExtractPAK(gchar *Path) {
     /* Set the offset in PAK to the beginning of this particular file
        to be extracted */
     /* If not GNU system,this should be Pos = Current->dwOffset */
-#ifdef WIN32
+    printf("Setting Pos\n");
+#if (defined WIN32) || (defined __APPLE__)
     Pos = Current->dwOffset;
 #else
     Pos.__pos = Current->dwOffset;
@@ -505,7 +507,8 @@ gboolean ExtractSingleFile(gchar *Filename) {
   /* Set the offset in PAK to the beginning of this particular file
      to be extracted */
   /* If not GNU system,this should be Pos = Current->dwOffset */
-#ifdef WIN32
+  printf("Setting Pos\n");
+#if (defined WIN32) || (defined __APPLE__)
   Pos = Current->dwOffset;
 #else
   Pos.__pos = Current->dwOffset;

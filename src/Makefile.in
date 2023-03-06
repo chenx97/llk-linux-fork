@@ -113,9 +113,6 @@ AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
-llk_linux_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
-	$(llk_linux_LDFLAGS) $(LDFLAGS) -o $@
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -349,9 +346,10 @@ llk_linux_SOURCES = \
 	eggtrayicon.c\
 	tray.c
 
-llk_linux_LDFLAGS = -lX11
 llk_linux_LDADD = \
 	$(PACKAGE_LIBS)\
+	-L/usr/X11/lib\
+	-lX11\
 	 -lc
 
 all: all-am
@@ -439,7 +437,7 @@ clean-binPROGRAMS:
 
 llk_linux$(EXEEXT): $(llk_linux_OBJECTS) $(llk_linux_DEPENDENCIES) $(EXTRA_llk_linux_DEPENDENCIES) 
 	@rm -f llk_linux$(EXEEXT)
-	$(AM_V_CCLD)$(llk_linux_LINK) $(llk_linux_OBJECTS) $(llk_linux_LDADD) $(LIBS)
+	$(AM_V_CCLD)$(LINK) $(llk_linux_OBJECTS) $(llk_linux_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
